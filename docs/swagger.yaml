@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: AidVault API
+  version: 1.0.0
+  description: API for managing secure aid request submissions and organization registration.
+
+paths:
+  /org:
+    post:
+      summary: Register an organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orgName:
+                  type: string
+                  example: Red Cross
+                email:
+                  type: string
+                  example: contact@redcross.org
+      responses:
+        '200':
+          description: Organization registered successfully
+
+  /aid-request:
+    post:
+      summary: Submit a new aid request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                aidType:
+                  type: string
+                  example: Food
+                orgId:
+                  type: integer
+                  example: 1
+                documentUrl:
+                  type: string
+                  example: https://s3.amazonaws.com/aidvault/IDproof123.pdf
+      responses:
+        '200':
+          description: Aid request submitted successfully
+
+  /aid-status:
+    get:
+      summary: View all aid request statuses
+      responses:
+        '200':
+          description: List of aid requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "1"
+                    name:
+                      type: string
+                      example: John Doe
+                    aidType:
+                      type: string
+                      example: Food
+                    status:
+                      type: string
+                      example: pending
